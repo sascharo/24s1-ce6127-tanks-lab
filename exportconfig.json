@@ -1,0 +1,7 @@
+{
+    "XLSX": {
+        "directory": "./Excel",
+		"timestamp": true,
+		"timestampPrepend": true
+    }
+}

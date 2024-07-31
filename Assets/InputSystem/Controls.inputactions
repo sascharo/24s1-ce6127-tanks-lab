@@ -1,0 +1,371 @@
+{
+    "name": "Controls",
+    "maps": [
+        {
+            "name": "Global",
+            "id": "1ab31d70-45e4-4f1c-a891-b78a0dad9061",
+            "actions": [
+                {
+                    "name": "ExitQuit",
+                    "type": "Value",
+                    "id": "fdd451ba-4394-434b-93d1-f1631a29e5d9",
+                    "expectedControlType": "Key",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Music",
+                    "type": "Value",
+                    "id": "7f25c4f8-d9f7-44fe-8609-53afa1b8e01b",
+                    "expectedControlType": "Key",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "TankSFX",
+                    "type": "Value",
+                    "id": "6836343a-73af-4afe-adc1-b51e0409869f",
+                    "expectedControlType": "Key",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "ShellSFX",
+                    "type": "Value",
+                    "id": "0a356d8c-f0d9-43b6-94a7-493e920fc9d4",
+                    "expectedControlType": "Key",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "FullscreenWindowed",
+                    "type": "Value",
+                    "id": "c31ee89c-6dc7-4e8e-bc41-b4f2ef6ef729",
+                    "expectedControlType": "Key",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "37a507f9-f5c8-4a8d-a9fb-7fa1f2da29fd",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardAI",
+                    "action": "ExitQuit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "de2f3184-99ca-43cd-8796-7ba5d4c2c98f",
+                    "path": "<Keyboard>/f5",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardAI",
+                    "action": "Music",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "11352ffa-9fd6-49a7-bd38-85cbaacdec3e",
+                    "path": "<Keyboard>/f6",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardAI",
+                    "action": "TankSFX",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6a299d71-76ef-46da-8210-e652d983af54",
+                    "path": "<Keyboard>/f7",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardAI",
+                    "action": "ShellSFX",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5b361649-b578-4d2f-bae1-d538fc063659",
+                    "path": "<Keyboard>/f12",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardAI",
+                    "action": "FullscreenWindowed",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Menu",
+            "id": "65d20687-0efd-4921-8d03-aa2257f1e19f",
+            "actions": [
+                {
+                    "name": "Continue",
+                    "type": "Value",
+                    "id": "2864a767-78cb-4c53-9f17-1891470b0bb0",
+                    "expectedControlType": "Key",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "23f5f9f0-853e-49dd-a523-8f5645fba3d1",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardAI",
+                    "action": "Continue",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "556b1b7d-f5c6-4b58-9100-38ad5ffb38cc",
+                    "path": "<Keyboard>/numpadEnter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardAI",
+                    "action": "Continue",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Player1",
+            "id": "0371f074-04c5-4376-96c3-478997ff128f",
+            "actions": [
+                {
+                    "name": "MoveTurn",
+                    "type": "Value",
+                    "id": "09377a04-b5c4-4c44-b7e1-30d012cb9cfc",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Fire",
+                    "type": "Value",
+                    "id": "0f299eef-a891-4d2b-956d-cf17672024c0",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "Direction",
+                    "id": "4f596009-8c86-4abf-8698-e4a56fcb2ab4",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MoveTurn",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "2ade656a-f763-4124-8c96-178c8d8e4dab",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMultiplayer;KeyboardAI",
+                    "action": "MoveTurn",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "8280913d-de54-4a8a-9f03-7284123d7a6c",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMultiplayer;KeyboardAI",
+                    "action": "MoveTurn",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "ab4f59af-3f02-4b96-85ff-ab21e46aceb9",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMultiplayer;KeyboardAI",
+                    "action": "MoveTurn",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "0f31c680-fefd-459b-8ab1-8153d2ca9215",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMultiplayer;KeyboardAI",
+                    "action": "MoveTurn",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "40945f6b-6e3c-4403-824e-9c446dcb4a11",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMultiplayer;KeyboardAI",
+                    "action": "Fire",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Player2",
+            "id": "88f5266b-0d44-4116-83a4-da46ae48300a",
+            "actions": [
+                {
+                    "name": "MoveTurn",
+                    "type": "Value",
+                    "id": "ae07ac40-cf99-4c47-a72e-54b68e97e908",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Fire",
+                    "type": "Value",
+                    "id": "add9fc00-8a8c-4138-a084-e9d7240cad64",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "Direction",
+                    "id": "ace9093c-db98-40e8-a581-8d550e589811",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MoveTurn",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "ab00a3f0-53e7-40e6-8691-663f99eef82e",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMultiplayer;KeyboardAI",
+                    "action": "MoveTurn",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "5c11464e-06f9-4b14-8e69-d3702fc85c50",
+                    "path": "<Keyboard>/downArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMultiplayer;KeyboardAI",
+                    "action": "MoveTurn",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "75291f9d-4925-4107-8aff-528d87923fb6",
+                    "path": "<Keyboard>/leftArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMultiplayer;KeyboardAI",
+                    "action": "MoveTurn",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "48d79147-d45d-423a-8cc3-df6818c06320",
+                    "path": "<Keyboard>/rightArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMultiplayer;KeyboardAI",
+                    "action": "MoveTurn",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "e37c437a-9f47-4c94-a032-d40107f1a079",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMultiplayer;KeyboardAI",
+                    "action": "Fire",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "14820a40-5788-4a7a-b0af-0ff67f539f9f",
+                    "path": "<Keyboard>/numpadEnter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMultiplayer;KeyboardAI",
+                    "action": "Fire",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": [
+        {
+            "name": "KeyboardMultiplayer",
+            "bindingGroup": "KeyboardMultiplayer",
+            "devices": [
+                {
+                    "devicePath": "<Keyboard>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        },
+        {
+            "name": "KeyboardAI",
+            "bindingGroup": "KeyboardAI",
+            "devices": [
+                {
+                    "devicePath": "<Keyboard>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        }
+    ]
+}
