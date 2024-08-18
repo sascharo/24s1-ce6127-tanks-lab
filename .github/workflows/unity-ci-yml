@@ -4,11 +4,7 @@
 
 name: Unity CI
 
-on:
-  push:
-    branches: [ "lab" ]
-  pull_request:
-    branches: [ "lab" ]
+on: [push, pull_request]
 
 env:
   RUST_CI_VERSION: 2024.8.2.0a0-lab
