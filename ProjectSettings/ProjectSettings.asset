@@ -12,7 +12,8 @@ PlayerSettings:
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: Nanyang Technological University
+  companyName: Nanyang Technological University - College of Computing and Data Science
+    (CCDS)
   productName: 24S1-CE6127 Tanks
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
@@ -141,7 +142,7 @@ PlayerSettings:
   loadStoreDebugModeEnabled: 0
   visionOSBundleVersion: 1.0
   tvOSBundleVersion: 1.0
-  bundleVersion: 2024.8.1.0a1-lab
+  bundleVersion: 2024.8.2.0a0-lab
   preloadedAssets:
   - {fileID: 0}
   - {fileID: 0}

@@ -19,7 +19,7 @@ MonoBehaviour:
   m_StatsLoggingFrequencyInFrames: 50
   m_IndexerSettings:
     m_Active: 1
-    m_ThermalActionDelay: 10
+    m_ThermalActionDelay: 12
     m_PerformanceActionDelay: 4
   m_ScalerSettings:
     m_AdaptiveFramerate:
