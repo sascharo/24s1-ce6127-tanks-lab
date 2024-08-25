@@ -11,7 +11,7 @@ on:
     branches: [ "main", "lab" ]
 
 env:
-  RUST_CI_VERSION: 2024.8.2.0a0-lab
+  RUST_CI_VERSION: 2024.8.3.0a0-lab
   RUST_CI_AUTHOR: sascharo
 
 jobs:
