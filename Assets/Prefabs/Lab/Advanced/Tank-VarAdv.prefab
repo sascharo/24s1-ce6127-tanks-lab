@@ -290,19 +290,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b43c36ab5b20fd4697fd58037efcb24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveSpeed: 20
-  RotationSpeed: 90
+  moveSpeed: 20
+  rotationSpeed: 90
   MovementSFX: {fileID: 2678484089058327894}
+  sourceEngineIdleSFX: {fileID: 2678484089058327894}
   TankSFX: {fileID: 9055413807802114283}
-  ClipIdle: {fileID: 8300000, guid: 4932ab25b84dd7649b80af68a9660ddc, type: 3}
-  ClipMoving: {fileID: 8300000, guid: d7ca9fb5aa30155449192b23d7fb3336, type: 3}
-  ClipShotFired: {fileID: 8300000, guid: 672a9941361ad494a99fba36759eca80, type: 3}
-  ClipTankExplode: {fileID: 8300000, guid: 5c27182a28a7eb942a362e6d198fe0e6, type: 3}
-  PitchRange: 0.2
-  InputIsEnabled: 1
-  PlayerNum: 0
-  MaxHealth: 100
-  Health: 100
+  sourceShotFiringSFX: {fileID: 9055413807802114283}
+  clipIdle: {fileID: 8300000, guid: 4932ab25b84dd7649b80af68a9660ddc, type: 3}
+  clipMoving: {fileID: 8300000, guid: d7ca9fb5aa30155449192b23d7fb3336, type: 3}
+  clipShotFired: {fileID: 8300000, guid: 672a9941361ad494a99fba36759eca80, type: 3}
+  clipTankExplode: {fileID: 8300000, guid: 5c27182a28a7eb942a362e6d198fe0e6, type: 3}
+  pitchRange: 0.2
+  inputIsEnabled: 1
+  playerNum: 0
+  maxHealth: 100
+  health: 100
 --- !u!114 &62657065768866321
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -315,10 +317,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f637e6d10a207848b8fa62050b0820e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Cooldown: 0.5
-  ShellPrefabRigidbody: {fileID: 819290636968819543, guid: e29314487b75ce54986f2cbdd9ecd9f2, type: 3}
-  LaunchForce: 15
-  SpawnPoint: {fileID: 7074695101240839342}
+  cooldown: 0.5
+  shellPrefabRigidbody: {fileID: 819290636968819543, guid: e29314487b75ce54986f2cbdd9ecd9f2, type: 3}
+  launchForce: 15
+  spawnPoint: {fileID: 7074695101240839342}
 --- !u!4 &7074695101240839342 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3671066048826693347, guid: c50c1660217215545b11956de4b824ce, type: 3}

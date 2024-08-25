@@ -1,0 +1,11 @@
+stateDiagram-v2
+    [*] --> Idle
+    Idle --> Moving : Mathf.Abs(moveTurnInputValue.y) > 0.1f || Mathf.Abs(moveTurnInputValue.x) > 0.1f
+    Moving --> Idle :  Mathf.Abs(moveTurnInputValue.y) <= 0.1f && Mathf.Abs(moveTurnInputValue.x) <= 0.1f
+    Idle --> TakingDamage : TakeDamage(damage) && health > 0
+    Moving --> TakingDamage : TakeDamage(damage) && health > 0
+    TakingDamage --> Idle : After 1 second
+    Idle --> Destroyed : TakeDamage(damage) && health <= 0
+    Moving --> Destroyed : TakeDamage(damage) && health <= 0
+    Destroyed --> Inactive : After 1 second
+    Inactive --> [*]

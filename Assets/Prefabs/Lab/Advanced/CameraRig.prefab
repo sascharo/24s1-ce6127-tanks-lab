@@ -89,8 +89,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdb243d87ba6d144aa78aec176fbbdb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DampTime: 0.2
-  ScreenEdgeBuffer: 4
-  MinSize: 6.5
+  dampTime: 0.2
+  screenEdgeBuffer: 4
+  minSize: 6.5
   TankTrans: []
-  TankManager: {fileID: 0}
+  tankManager: {fileID: 0}

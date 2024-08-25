@@ -196,10 +196,6 @@ PrefabInstance:
       value: Tank-VarBasic
       objectReference: {fileID: 0}
     - target: {fileID: 8944982730892466081, guid: 5cee358cbd472b34ba82eff2cd4b3b1d, type: 3}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8944982730892466081, guid: 5cee358cbd472b34ba82eff2cd4b3b1d, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0
       objectReference: {fileID: 0}

@@ -208,10 +208,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1940569397122316618, guid: f0c47245f81ae0245ba08443d633f463, type: 3}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1940569397122316618, guid: f0c47245f81ae0245ba08443d633f463, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -257,6 +253,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7927681741215425938, guid: f0c47245f81ae0245ba08443d633f463, type: 3}
       propertyPath: SpawnPointContainer
+      value: 
+      objectReference: {fileID: 594165938}
+    - target: {fileID: 7927681741215425938, guid: f0c47245f81ae0245ba08443d633f463, type: 3}
+      propertyPath: spawnPointContainer
       value: 
       objectReference: {fileID: 594165938}
     m_RemovedComponents: []
@@ -334,17 +334,9 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -7165938291448962411, guid: fa2cf29ed7cbd2a4eb3e58895d351508, type: 3}
-      propertyPath: TankManager
+      propertyPath: tankManager
       value: 
       objectReference: {fileID: 1752423673}
-    - target: {fileID: -7165938291448962411, guid: fa2cf29ed7cbd2a4eb3e58895d351508, type: 3}
-      propertyPath: _tankManager
-      value: 
-      objectReference: {fileID: 1752423673}
-    - target: {fileID: 305190049097861156, guid: fa2cf29ed7cbd2a4eb3e58895d351508, type: 3}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 305190049097861156, guid: fa2cf29ed7cbd2a4eb3e58895d351508, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

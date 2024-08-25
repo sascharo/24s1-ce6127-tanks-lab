@@ -11,9 +11,9 @@ using UnityEngine.InputSystem;
 /// </summary>
 public class Tank03ScriptingTheTankMovement : MonoBehaviour
 {
-    public float Speed = 12f;                               // How fast the tank moves forward and back.
-    public float TurnSpeed = 180f;                          // How fast the tank turns in degrees per second.
-    [HideInInspector] public InputActionMap InputActionMap; // Reference to the player number's InputActionMap.
+    public float speed = 12f;                               // How fast the tank moves forward and back.
+    public float turnSpeed = 180f;                          // How fast the tank turns in degrees per second.
+    [HideInInspector] public InputActionMap inputActionMap; // Reference to the player number's inputActionMap.
 
     private InputAction moveTurnAction; // Input action used to move the tank.
     private Rigidbody rbody;            // Rigidbody reference used to move the tank.
@@ -27,8 +27,8 @@ public class Tank03ScriptingTheTankMovement : MonoBehaviour
         rbody = GetComponent<Rigidbody>();
 
         PlayerInput playerInput = GetComponent<PlayerInput>();
-        InputActionMap = playerInput.actions.FindActionMap("Player1");
-        // m_InputActionMap = playerInput.actions.actionMaps[0]; // Alternative way to get the action map.
+        inputActionMap = playerInput.actions.FindActionMap("Player1");
+        // inputActionMap = playerInput.actions.actionMaps[0]; // Alternative way to get the action map.
     }
 
     /// <summary>
@@ -38,8 +38,8 @@ public class Tank03ScriptingTheTankMovement : MonoBehaviour
     {
         rbody.isKinematic = false;
 
-        InputActionMap.Enable();
-        moveTurnAction = InputActionMap.FindAction("MoveTurn");
+        inputActionMap.Enable();
+        moveTurnAction = inputActionMap.FindAction("MoveTurn");
         moveTurnInputValue = Vector2.zero;
     }
 
@@ -50,7 +50,7 @@ public class Tank03ScriptingTheTankMovement : MonoBehaviour
     {
         rbody.isKinematic = true;
 
-        InputActionMap.Disable();
+        inputActionMap.Disable();
     }
 
     /// <summary>
@@ -66,10 +66,10 @@ public class Tank03ScriptingTheTankMovement : MonoBehaviour
     /// </summary>
     private void FixedUpdate()
     {
-        Vector3 move = transform.forward * moveTurnInputValue.y * Speed * Time.deltaTime;
+        Vector3 move = transform.forward * moveTurnInputValue.y * speed * Time.deltaTime;
         rbody.MovePosition(rbody.position + move);
 
-        float turn = moveTurnInputValue.x * TurnSpeed * Time.deltaTime;
+        float turn = moveTurnInputValue.x * turnSpeed * Time.deltaTime;
         Quaternion turnRotation = Quaternion.Euler(0f, turn, 0f);
         rbody.MoveRotation(rbody.rotation * turnRotation);
     }

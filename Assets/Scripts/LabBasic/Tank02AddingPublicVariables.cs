@@ -7,8 +7,8 @@ using UnityEngine;
 
 public class Tank02AddingPublicVariables : MonoBehaviour
 {
-    public float Speed = 12f;
-    public float m_TurnSpeed = 180f;
+    public float speed = 12f;
+    public float turnSpeed = 180f;
 
     // Awake is called right at the beginning if the object is active.
     private void Awake()

@@ -1,43 +1,90 @@
-﻿using UnityEngine;
-using UnityEngine.InputSystem;
+﻿/*
+ * Tank.cs
+ * 
+ * Controls the behavior of a tank in a Unity game. It handles the tank's movement, rotation, and firing mechanisms using Unity's new input system.
+ * 
+ * Features:
+ * - Movement and rotation control based on player input.
+ * - State machine to manage the tank's idle and moving states.
+ * - Integration with a firing system to allow the tank to fire projectiles.
+ * - Debugging GUI to display the current state of the tank.
+ * 
+ * Components:
+ * - Rigidbody: Used for physics-based movement.
+ * - TankFiringSystem: Manages the firing of projectiles.
+ * - PlayerInput: Handles player input actions.
+ * 
+ * Methods:
+ * - Awake: Initializes references to components.
+ * - Start: Sets up the input action map and enables it.
+ * - OnDisable: Disables the input action map.
+ * - Update: Handles movement and firing input.
+ * - FixedUpdate: Updates movement and rotation based on physics.
+ * - Move: Moves the tank forward or backward.
+ * - Rotate: Rotates the tank left or right.
+ * - FireInput: Handles firing input and triggers the firing system.
+ * - OnGUI: Displays the current state for debugging purposes.
+ */
 
-using Random = UnityEngine.Random;
-using Debug = UnityEngine.Debug;
+using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace CE6127.Tanks.Basic
 {
     public class Tank : MonoBehaviour
     {
-        public float MoveSpeed = 20f;               // The speed of the tank's movement.
-        public float RotationSpeed = 90f;           // The speed of the tank's rotation.
-        [Header("Input")] 
-        public bool InputIsEnabled = true;          // Enable or disable input.
+        public float moveSpeed = 20f;           // The speed of the tank's movement.
+        public float rotationSpeed = 90f;       // The speed of the tank's rotation.
 
-        // State machine state.
-        public enum SMState
+        // CurrentTankState machine state.
+        public enum TankState
         {
             Idle = 0,   // Default state.
             Moving      // Moving state.
         };
-        protected SMState m_State;                  // The current state of the tank.
+        protected TankState currentState;       // The current state of the tank.
 
-        protected Rigidbody m_Rigidbody;            // Reference to the tank's rigidbody.
-        protected TankFiringSystem m_TankShot;      // Reference to the tank's firing system.
+        public TankState CurrentTankState
+        {
+            // Get the state.
+            get { return currentState; }
+            // Set the state.
+            set
+            {
+                if (currentState != value)
+                {
+                    switch (value)
+                    {
+                        case TankState.Idle:
+                            break;
+                        case TankState.Moving:
+                            break;
+                        default:
+                            break;
+                    }
 
-        private InputActionMap m_InputActionMap;    // Reference to the player number's InputActionMap.
-        private InputAction m_MoveTurnAction;       // Input action used to move the tank.
-        private Vector2 m_MoveTurnInputValue;       // Move and turn compound input value (new input system).
-        private InputAction m_FireAction;           // Input action used to fire a shell from the tank.
-        private bool m_FireKeyDown;                 // Fire key down state (new input system).
+                    currentState = value;
+                }
+            }
+        }
+
+        protected Rigidbody rbody;              // Reference to the tank's rigidbody.
+        protected TankFiringSystem tankFiring;  // Reference to the tank's firing system.
+
+        private InputActionMap inputActionMap;  // Reference to the player number's InputActionMap.
+        private InputAction moveTurnAction;     // Input action used to move the tank.
+        private Vector2 moveTurnInputValue;     // Move and turn compound input value (new input system).
+        private InputAction fireAction;         // Input action used to fire a shell from the tank.
+        private bool fireKeyDown;               // Fire key down state (new input system).
 
         const float k_MaxDepenetrationVelocity = float.PositiveInfinity; // This is to fix a change to the physics engine.
 
         // Awake is called right at the beginning if the object is active.
         private void Awake()
         {
-            m_Rigidbody = GetComponent<Rigidbody>();
+            rbody = GetComponent<Rigidbody>();
 
-            m_TankShot = GetComponent<TankFiringSystem>();
+            tankFiring = GetComponent<TankFiringSystem>();
         }
 
         // Start is called before the first frame update.
@@ -47,24 +94,24 @@ namespace CE6127.Tanks.Basic
             Physics.defaultMaxDepenetrationVelocity = k_MaxDepenetrationVelocity;
 
             // Get the player action map corresponding to the player number.
-            m_InputActionMap = GetComponent<PlayerInput>().actions.FindActionMap("Player1");
+            inputActionMap = GetComponent<PlayerInput>().actions.FindActionMap("Player1");
             // Enable the action map.
-            m_InputActionMap.Enable();
+            inputActionMap.Enable();
 
             // Get the 'MoveTurn' action.
-            m_MoveTurnAction = m_InputActionMap.FindAction("MoveTurn");
+            moveTurnAction = inputActionMap.FindAction("MoveTurn");
             // Zero out the move and turn input value.
-            m_MoveTurnInputValue = Vector2.zero;
+            moveTurnInputValue = Vector2.zero;
 
             // Get the 'Fire' action.
-            m_FireAction = m_InputActionMap.FindAction("Fire");
-            m_FireKeyDown = false;
+            fireAction = inputActionMap.FindAction("Fire");
+            fireKeyDown = false;
         }
 
         private void OnDisable()
         {
             // Disable the action map.
-            m_InputActionMap.Disable();
+            inputActionMap.Disable();
         }
 
         // Update is called once per frame.
@@ -77,27 +124,27 @@ namespace CE6127.Tanks.Basic
         protected void MovementInput()
         {
             // Update input.
-            m_MoveTurnInputValue = m_MoveTurnAction.ReadValue<Vector2>();
+            moveTurnInputValue = moveTurnAction.ReadValue<Vector2>();
 
             // Check movement and change states according to it.
-            if (Mathf.Abs(m_MoveTurnInputValue.y) > 0.1f || Mathf.Abs(m_MoveTurnInputValue.x) > 0.1f)
-                State = SMState.Moving; // Change state to moving.
+            if (Mathf.Abs(moveTurnInputValue.y) > 0.1f || Mathf.Abs(moveTurnInputValue.x) > 0.1f)
+                CurrentTankState = TankState.Moving; // Change state to moving.
             else
-                State = SMState.Idle; // Change state to idle.
+                CurrentTankState = TankState.Idle; // Change state to idle.
         }
 
         protected void FireInput()
         {
-            // Register a discard event to set m_FireKeyDown to true.
-            m_FireAction.started += _ => m_FireKeyDown = true;
+            // Register a discard event to set fireKeyDown to true.
+            fireAction.started += _ => fireKeyDown = true;
 
             // Fire shots.
-            if (m_FireKeyDown)
+            if (fireKeyDown)
             {
-                m_TankShot.Fire();
+                tankFiring.Fire();
 
                 // Reset the fire key down state.
-                m_FireKeyDown = false;
+                fireKeyDown = false;
             }
         }
 
@@ -112,47 +159,23 @@ namespace CE6127.Tanks.Basic
         public void Move()
         {
             // Calculate the move vector.
-            Vector3 moveVect = transform.forward * MoveSpeed * Time.deltaTime * m_MoveTurnInputValue.y;
+            Vector3 moveVect = transform.forward * moveSpeed * Time.deltaTime * moveTurnInputValue.y;
             // Move the tank into position.
-            m_Rigidbody.MovePosition(m_Rigidbody.position + moveVect);
+            rbody.MovePosition(rbody.position + moveVect);
         }
 
         // Rotate the tank.
         public void Rotate()
         {
             // Calculate the rotation on dgrees.
-            float rotationDegree = RotationSpeed * Time.deltaTime * m_MoveTurnInputValue.x;
+            float rotationDegree = rotationSpeed * Time.deltaTime * moveTurnInputValue.x;
             // Convert the Euler rotation to a quaternion.
             Quaternion rotQuat = Quaternion.Euler(0f, rotationDegree, 0f);
             // Rotate the tank.
-            m_Rigidbody.MoveRotation(m_Rigidbody.rotation * rotQuat);
-        }
-
-        public SMState State
-        {
-            // Get the state.
-            get { return m_State; }
-            // Set the state.
-            set
-            {
-                if (m_State != value)
-                {
-                    switch (value)
-                    {
-                        case SMState.Idle:
-                            break;
-                        case SMState.Moving:
-                            break;
-                        default:
-                            break;
-                    }
-
-                    m_State = value;
-                }
-            }
+            rbody.MoveRotation(rbody.rotation * rotQuat);
         }
 
         // Is called every frame to draw the GUI for debugging.
-        private void OnGUI() => GUILayout.Label($"<color='fuchsia'><size=35>{State}</size></color>");
+        private void OnGUI() => GUILayout.Label($"<color='fuchsia'><size=35>{CurrentTankState}</size></color>");
     }
 }

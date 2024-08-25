@@ -1,30 +1,59 @@
-﻿using UnityEngine;
+﻿/*
+ * CameraRig.cs
+ * 
+ * This script manages the camera behavior in a Unity game. It ensures the camera smoothly follows and zooms to fit all active tanks within the view.
+ * 
+ * Features:
+ * - Smooth camera movement to follow the average position of all active tanks.
+ * - Dynamic zoom to ensure all active tanks are within the camera's view.
+ * - Adjustable damp time, screen edge buffer, and minimum camera size.
+ * 
+ * Components:
+ * - float dampTime: Approximate time for the camera to refocus.
+ * - float screenEdgeBuffer: Space between the top/bottom most target and the screen edge.
+ * - float minSize: The smallest orthographic size the camera can be.
+ * - Transform[] tankTransform: All the tank transforms.
+ * - TankManager tankManager: Reference to the tank manager.
+ * - Camera cam: Used for referencing the camera.
+ * - Vector3 averagePos: The position the camera is moving towards.
+ * - float zoomSpeed: Reference speed for the smooth damping of the orthographic size.
+ * - Vector3 moveVelocity: Reference velocity for the smooth damping of the position.
+ * 
+ * Methods:
+ * - Awake: Initializes the camera reference.
+ * - Start: Retrieves tank transforms from the tank manager.
+ * - FixedUpdate: Updates the camera's position and size.
+ * - Move: Smoothly transitions the camera to the average position of active tanks.
+ * - CalculateAveragePosition: Calculates the average position of all active tanks.
+ * - Zoom: Smoothly adjusts the camera's orthographic size.
+ * - GetRequiredSize: Calculates the required orthographic size to fit all active tanks within the view.
+ */
 
-using Debug = UnityEngine.Debug;
+using UnityEngine;
 
 namespace CE6127.Tanks.Advanced
 {
     public class CameraRig : MonoBehaviour
     {
-        public float DampTime = 0.2f;                   // Approximate time for the camera to refocus.
-        public float ScreenEdgeBuffer = 4f;             // Space between the top/bottom most target and the screen edge.
-        public float MinSize = 6.5f;                    // The smallest orthographic size the camera can be.
-        [HideInInspector] public Transform[] TankTrans; // All the tank transforms.
-        public TankManager TankManager;                 // Reference to the tank manager.
+        public float dampTime = 0.2f;       // Approximate time for the camera to refocus.
+        public float screenEdgeBuffer = 4f; // Space between the top/bottom most target and the screen edge.
+        public float minSize = 6.5f;        // The smallest orthographic size the camera can be.
+        [HideInInspector] public Transform[] tankTransform; // All the tank transforms.
+        public TankManager tankManager;     // Reference to the tank manager.
 
-        protected Camera m_Camera;                      // Used for referencing the camera.
-        protected Vector3 m_AveragePos;                 // The position the camera is moving towards.
-        protected float m_ZoomSpeed;                    // Reference speed for the smooth damping of the orthographic size.
-        protected Vector3 m_MoveVelocity;               // Reference velocity for the smooth damping of the position.
+        protected Camera cam;               // Used for referencing the camera.
+        protected Vector3 averagePos;       // The position the camera is moving towards.
+        protected float zoomSpeed;          // Reference speed for the smooth damping of the orthographic size.
+        protected Vector3 moveVelocity;     // Reference velocity for the smooth damping of the position.
 
         private void Awake()
         {
-            m_Camera = GetComponentInChildren<Camera>();
+            cam = GetComponentInChildren<Camera>();
         }
 
         private void Start()
         {
-            TankTrans = TankManager.GetTanksTransform();
+            tankTransform = tankManager.GetTanksTransform();
         }
 
         private void FixedUpdate()
@@ -41,7 +70,7 @@ namespace CE6127.Tanks.Advanced
             CalculateAveragePosition();
 
             // Smoothly transition to that position.
-            transform.position = Vector3.SmoothDamp(transform.position, m_AveragePos, ref m_MoveVelocity, DampTime);
+            transform.position = Vector3.SmoothDamp(transform.position, averagePos, ref moveVelocity, dampTime);
         }
 
         // Calculate the average position of all tanks.
@@ -51,41 +80,41 @@ namespace CE6127.Tanks.Advanced
             var activeTanksCount = 0;
 
             // Loop to sum up all active tanks' position.
-            for (var i = 0; i < TankTrans.Length; ++i)
+            for (var i = 0; i < tankTransform.Length; ++i)
             {
                 // Skip non-active object(s).
-                if (!TankTrans[i].gameObject.activeSelf)
+                if (!tankTransform[i].gameObject.activeSelf)
                     continue;
 
-                sumPos += TankTrans[i].position;
+                sumPos += tankTransform[i].position;
                 activeTanksCount++;
             }
 
             // Get the average by dividing (only if number of active tanks are not zero).
             if (activeTanksCount > 0)
-                m_AveragePos = sumPos / activeTanksCount;
+                averagePos = sumPos / activeTanksCount;
 
             // Retain the Y position.
-            m_AveragePos.y = transform.position.y;
+            averagePos.y = transform.position.y;
         }
 
         protected void Zoom()
         {
             // Zoom based on the required size.
-            m_Camera.orthographicSize = 
-                Mathf.SmoothDamp(m_Camera.orthographicSize, GetRequiredSize(), ref m_ZoomSpeed, DampTime);
+            cam.orthographicSize = 
+                Mathf.SmoothDamp(cam.orthographicSize, GetRequiredSize(), ref zoomSpeed, dampTime);
         }
 
         protected float GetRequiredSize()
         {
             // Size cannot be smaller than the minimum size.
-            float orthoSize = MinSize;
+            float orthoSize = minSize;
 
             // Convert average position to local position of camera rig.
-            Vector3 localAveragePos = transform.InverseTransformPoint(m_AveragePos);
+            Vector3 localAveragePos = transform.InverseTransformPoint(averagePos);
 
             // Loop through all tanks and check which one is closest to the edge of the screen.
-            foreach (var target in TankTrans)
+            foreach (var target in tankTransform)
             {
                 // Skip any tanks that are not active.
                 if (!target.gameObject.activeSelf)
@@ -100,10 +129,10 @@ namespace CE6127.Tanks.Advanced
                 // Y-axis:
                 orthoSize = Mathf.Max(orthoSize, Mathf.Abs(size.y));
                 // X-axis:
-                orthoSize = Mathf.Max(orthoSize, Mathf.Abs(size.x) / m_Camera.aspect);
+                orthoSize = Mathf.Max(orthoSize, Mathf.Abs(size.x) / cam.aspect);
             }
 
-            orthoSize += ScreenEdgeBuffer;
+            orthoSize += screenEdgeBuffer;
 
             return orthoSize;
         }

@@ -1,37 +1,64 @@
-﻿using System;
+﻿/*
+ * TankManager.cs
+ * 
+ * This script manages the spawning, resetting, and destruction of tanks in a Unity game. It handles the initialization of tanks, their colors, and the game state when tanks are destroyed.
+ * 
+ * Features:
+ * - Spawns tanks at designated spawn points.
+ * - Manages the player count and tracks the remaining tanks.
+ * - Handles tank destruction and announces the last tank standing.
+ * - Resets tanks to their initial positions and states.
+ * 
+ * Components:
+ * - GameObject spawnPointContainer: The parent object containing all spawn points.
+ * - GameObject tankPrefab: The prefab used to instantiate tanks.
+ * - Action<Tank> OneTankLeft: Delegate called when only one tank is left.
+ * - Color[] playerColors: Array of colors assigned to each tank.
+ * - int playerCount: The number of players in the game.
+ * - List<Tank> tanks: List of all tanks in the game.
+ * - List<Transform> spawnPoints: List of all spawn points in the game.
+ * 
+ * Methods:
+ * - Awake: Initializes spawn points and spawns tanks.
+ * - OnTankDestroy: Handles the destruction of a tank and checks for the last tank standing.
+ * - Restart: Resets all tanks to their initial positions and states.
+ * - SpawnTanks: Spawns tanks and assigns colors to them.
+ * - GetTanksTransform: Returns an array of transforms for all tanks.
+ * - NumberOfPlayers (Property): Gets the number of players based on spawn points.
+ */
+
+using System;
 using System.Collections.Generic;
 using UnityEngine;
-
-using Debug = UnityEngine.Debug;
 
 namespace CE6127.Tanks.Advanced
 {
     public class TankManager : MonoBehaviour
     {
-        public GameObject SpawnPointContainer;  // This is the parent of all spawn points.
-        public GameObject TankPrefab;           // This is the prefab of the tank.
+        public GameObject spawnPointContainer;  // This is the parent of all spawn points.
+        public GameObject tankPrefab;           // This is the prefab of the tank.
 
         public Action<Tank> OneTankLeft;        // This will be called when only one tank left in the scene.
 
         // This is the list of colors for the tanks.
-        protected Color[] m_PlayerColors =
+        protected Color[] playerColors =
         {
             Color.red,
             Color.blue,
             Color.green
         };
 
-        protected int m_PlayerCount;                        // This is the number of players in the scene.
-        protected List<Tank> m_Tanks = new();               // This is the list of tanks in the scene.
-        protected List<Transform> m_SpawnPoints = new();    // This is the list of spawn points in the scene.
+        protected int playerCount;                        // This is the number of players in the scene.
+        protected List<Tank> tanks = new();               // This is the list of tanks in the scene.
+        protected List<Transform> spawnPoints = new();    // This is the list of spawn points in the scene.
 
         private void Awake()
         {
             // Setup the spawn points from spawn parent.
-            var spawnTrans = SpawnPointContainer.transform;
+            var spawnTrans = spawnPointContainer.transform;
             // Loop through all the children and add them to the list.
             for (var i = 0; i < spawnTrans.childCount; ++i)
-                m_SpawnPoints.Add(spawnTrans.GetChild(i));
+                spawnPoints.Add(spawnTrans.GetChild(i));
 
             SpawnTanks();
         }
@@ -39,65 +66,65 @@ namespace CE6127.Tanks.Advanced
         public void OnTankDestroy(Tank target)
         {
             // Reduce the player count and put the dead tank to the back of the list.
-            m_PlayerCount--;
-            m_Tanks.Remove(target);
-            m_Tanks.Add(target);
+            playerCount--;
+            tanks.Remove(target);
+            tanks.Add(target);
 
             // If it is the last tank standing, call delegate to announce the winner.
-            if (m_PlayerCount == 1)
+            if (playerCount == 1)
             {
                 // Call the delegate
-                OneTankLeft?.Invoke(m_Tanks[0]); // First tank is always the winner.
+                OneTankLeft?.Invoke(tanks[0]); // First tank is always the winner.
 
                 // Disable the input of the winner.
-                m_Tanks[0].InputIsEnabled = false;
+                tanks[0].inputIsEnabled = false;
             }
         }
 
         public void Restart()
         {
             // Reset all tanks.
-            foreach (var tank in m_Tanks)
-                tank.Restart(m_SpawnPoints[tank.PlayerNum].position, m_SpawnPoints[tank.PlayerNum].rotation);
+            foreach (var tank in tanks)
+                tank.Restart(spawnPoints[tank.playerNum].position, spawnPoints[tank.playerNum].rotation);
 
             // Reset the player count.
-            m_PlayerCount = m_Tanks.Count;
+            playerCount = tanks.Count;
         }
 
         // Spawn and set up the tank's color.
         public void SpawnTanks()
         {
-            m_PlayerCount = m_SpawnPoints.Count;
+            playerCount = spawnPoints.Count;
 
-            for (var i = 0; i < m_PlayerCount; ++i)
+            for (var i = 0; i < playerCount; ++i)
             {
                 // Spawn Tank and store it.
-                GameObject tank = Instantiate(TankPrefab, m_SpawnPoints[i].position, m_SpawnPoints[i].rotation);
-                m_Tanks.Add(tank.GetComponent<Tank>());
-                m_Tanks[i].PlayerNum = i;
+                GameObject tank = Instantiate(tankPrefab, spawnPoints[i].position, spawnPoints[i].rotation);
+                tanks.Add(tank.GetComponent<Tank>());
+                tanks[i].playerNum = i;
                 // Subscribe to the destroy event.
-                m_Tanks[i].DestroyTank += OnTankDestroy;
+                tanks[i].DestroyTank += OnTankDestroy;
 
                 // Set up color.
-                var renderers = m_Tanks[i].GetComponentsInChildren<MeshRenderer>();
+                var renderers = tanks[i].GetComponentsInChildren<MeshRenderer>();
                 foreach (var rend in renderers)
-                    rend.material.color = m_PlayerColors[i];
+                    rend.material.color = playerColors[i];
             }
         }
 
         public Transform[] GetTanksTransform()
         {
-            var count = m_Tanks.Count;
+            var count = tanks.Count;
             var tanksTrans = new Transform[count];
             for (var i = 0; i < count; ++i)
-                tanksTrans[i] = m_Tanks[i].transform;
+                tanksTrans[i] = tanks[i].transform;
 
             return tanksTrans;
         }
 
         public int NumberOfPlayers
         {
-            get { return m_SpawnPoints.Count; }
+            get { return spawnPoints.Count; }
         }
     }
 }

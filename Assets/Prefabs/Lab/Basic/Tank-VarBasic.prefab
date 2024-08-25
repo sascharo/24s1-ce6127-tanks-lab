@@ -89,9 +89,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9aaa46582c3e53498a6b91c00fbfeea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveSpeed: 20
-  RotationSpeed: 90
-  InputIsEnabled: 1
+  moveSpeed: 20
+  rotationSpeed: 90
 --- !u!114 &2190169974270841812
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -104,7 +103,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad8b7680efe540f4087a7a6e4da95ea5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Cooldown: 0.5
-  ShellPrefabRigidbody: {fileID: 819290636968819543, guid: 71633e15238e75b439fa07564c51aca6, type: 3}
-  LaunchForce: 15
-  SpawnPoint: {fileID: 240124618385424399}
+  cooldown: 0.5
+  shellPrefabRigidbody: {fileID: 819290636968819543, guid: 71633e15238e75b439fa07564c51aca6, type: 3}
+  launchForce: 15
+  spawnPoint: {fileID: 240124618385424399}

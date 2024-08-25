@@ -58,4 +58,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SpawnPointContainer: {fileID: 0}
+  spawnPointContainer: {fileID: 0}
   TankPrefab: {fileID: 2387291159128805776, guid: c2fc75594757701439f0ecb43b7cee3e, type: 3}
+  tankPrefab: {fileID: 2387291159128805776, guid: c2fc75594757701439f0ecb43b7cee3e, type: 3}
