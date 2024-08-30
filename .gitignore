@@ -80,3 +80,6 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
 *.xml.inCaseOfCorruption.bak
+
+# macOS
+.DS_Store
