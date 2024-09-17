@@ -1,4 +1,23 @@
-﻿using UnityEngine;
+﻿/*
+ * -------------------------------------------------------------------------
+ * File: TankHealth.cs
+ * 
+ * This script is responsible for managing the health system of a tank in the game. 
+ * It defines the starting health of the tank, manages its current health, and 
+ * updates the UI to reflect any changes in health.
+ * 
+ * Components:
+ * - `HealthSlider`: A UI slider showing the current health.
+ * - `HealthSliderFillImage`: The fill image of the slider that changes color.
+ * - `TankExplosionPrefab`: A prefab used to show explosion effects when the tank is destroyed.
+ * 
+ * Additional Details:
+ * - This class interacts with the Unity UI and audio system to provide visual and audio feedback 
+ *   when the tank takes damage or is destroyed.
+ * -------------------------------------------------------------------------
+ */
+
+using UnityEngine;
 using UnityEngine.UI;
 
 using Debug = UnityEngine.Debug;
@@ -16,11 +35,24 @@ namespace CE6127.Tanks.AI
         public Color FullHealthColor = Color.green; // The color the health bar will be when on full health.
         public Color ZeroHealthColor = Color.red;   // The color the health bar will be when on no health.
         public GameObject TankExplosionPrefab;      // A prefab that will be instantiated in Awake, then used whenever the tank dies.
-    
-        private AudioSource m_ExplosionAudio;           // The audio source to play when the tank explodes.
-        private ParticleSystem m_ExplosionParticles;    // The particle system the will play when the tank is destroyed.
-        private float m_CurrentHealth;                  // How much health the tank currently has.
-        private bool m_Dead;                            // Has the tank been reduced beyond zero health yet?
+
+        private AudioSource m_ExplosionAudio;        // The audio source to play when the tank explodes.
+        private ParticleSystem m_ExplosionParticles; // The particle system the will play when the tank is destroyed.
+        private float m_CurrentHealth;               // How much health the tank currently has.
+        private bool m_Dead;                         // Has the tank been reduced beyond zero health yet?
+
+        // Property to get and set m_CurrentHealth.
+        public float CurrentHealth
+        {
+            get { return m_CurrentHealth; }
+            set
+            {
+                m_CurrentHealth = value;
+
+                // Update the health slider's value and color.
+                SetHealthUI();
+            }
+        }
 
         /// <summary>
         /// Method <c>Awake</c> instantiate the explosion prefab and get a reference to the particle system and audio source on it.
@@ -41,11 +73,8 @@ namespace CE6127.Tanks.AI
         private void OnEnable()
         {
             // When the tank is enabled, reset the tank's health and whether or not it's dead.
-            m_CurrentHealth = StartingHealth;
+            CurrentHealth = StartingHealth;
             m_Dead = false;
-
-            // Update the health slider's value and color.
-            SetHealthUI();
         }
 
         /// <summary>
@@ -54,13 +83,10 @@ namespace CE6127.Tanks.AI
         public void TakeDamage(float amount)
         {
             // Reduce current health by the amount of damage done.
-            m_CurrentHealth -= amount;
-
-            // Change the UI elements appropriately.
-            SetHealthUI();
+            CurrentHealth -= amount;
 
             // If the current health is at or below zero and it has not yet been registered, call OnDeath.
-            if (m_CurrentHealth <= 0f && !m_Dead)
+            if (CurrentHealth <= 0f && !m_Dead)
                 OnTermination();
         }
 
